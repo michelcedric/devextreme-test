@@ -1,0 +1,50 @@
+<h2 class="content-block">Tasks</h2>
+
+<dx-data-grid class="dx-card wide-card" [dataSource]="dataSource" [showBorders]="false" [focusedRowEnabled]="true"
+  [focusedRowIndex]="0" [rowAlternationEnabled]="true" [columnAutoWidth]="true" [columnHidingEnabled]="true"
+  (onInitNewRow)="onCreation($event)"
+  (onEditCanceled)="onEditionDone()">
+
+  <dxo-paging [pageSize]="10"></dxo-paging>
+  <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
+  <dxo-filter-row [visible]="true"></dxo-filter-row>
+  <dxo-editing mode="cell" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
+  </dxo-editing>
+  <dxi-column dataField="Task_Status" caption="new column" cellTemplate="cellTemplate"
+    editCellTemplate="editCellTemplate">
+    <div *dxTemplate="let cellInfo of 'cellTemplate'">{{cellInfo.value}}</div>
+    <div *dxTemplate="let cellInfo of 'editCellTemplate'">
+      <div class="master-of-operations-editor-container">
+        <i class="dx-icon-info dx-icon-custom-style info" title="My title"></i>
+        <dx-select-box placeholder="Select a value" [dataSource]="status" valueExpr="name" displayExpr="name"
+          [minSearchLength]="2" [searchEnabled]="true" [value]="cellInfo.data.Task_Status"
+          validationMessagePosition="top">
+
+        </dx-select-box>
+      </div>
+      <app-test></app-test>
+    </div>
+    <dxi-validation-rule type="required"></dxi-validation-rule>
+  </dxi-column>
+
+
+  <dxi-column dataField="Task_ID" [width]="90" [hidingPriority]="2">
+  </dxi-column>
+  <dxi-column dataField="Task_Subject" [width]="190" caption="Subject" [hidingPriority]="8">
+  </dxi-column>
+  <dxi-column dataField="Task_Priority" caption="Priority" [hidingPriority]="5">
+    <dxo-lookup [dataSource]="priority" valueExpr="value" displayExpr="name">
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column dataField="ResponsibleEmployee.Employee_Full_Name" caption="Assigned To" [allowSorting]="false"
+    [hidingPriority]="7">
+  </dxi-column>
+  <dxi-column dataField="Task_Start_Date" caption="Start Date" dataType="date" [hidingPriority]="3">
+  </dxi-column>
+  <dxi-column dataField="Task_Due_Date" caption="Due Date" dataType="date" [hidingPriority]="4">
+  </dxi-column>
+  <dxi-column dataField="Task_Priority" caption="Priority" name="Priority" [hidingPriority]="1">
+  </dxi-column>
+  <dxi-column dataField="Task_Completion" caption="Completion" [hidingPriority]="0">
+  </dxi-column>
+</dx-data-grid>
